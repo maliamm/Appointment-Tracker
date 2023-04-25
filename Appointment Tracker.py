@@ -7,7 +7,14 @@
 import sqlite3
 from sqlite3 import Error 
 import datetime
-
+# Define function to ask for admin login credentials
+def login():
+    username = input("Enter username: ")
+    password = input("Enter password: ")
+    if username == "admin" and password == "password":
+        return True
+    else:
+        return False
 # Database connection being established to 'myinventory.db' where all appointment information is stored.
 database_file_path = "myinventory.db"
 def create_connection(db_file):
@@ -24,12 +31,13 @@ def insert_data():
     ndc = input("Enter contact information: ")
     location = input ("Enter appointment date MM/DD/YY: ")
     availability = input("Enter appointment time: ")
-    arrivaldate = input("Enter designed tattoo artist: ")
-    expirationdate = input("Enter tattoo design and location: ")
+    arrivaldate = input("Enter designated beautician: ")
+    expirationdate = input("Enter type of beauty service: ")
+    service_type = input("Enter type  of beauty service(e.g. haircut, manicure, facial, etc.): ")
     changemade = str(now.year) +"/"+str(now.month) +"/"+str(now.day)
     try:      
-        sqlresult = conn.execute("INSERT INTO vaccines (name,ndc,location,availability,arrivaldate,expirationdate,changemade)\
-            values("+"'"+ str(name) +"'" + ",'"+ str(ndc) +"', '"+ str(location) +"','"+ str (availability)+"','"+str(arrivaldate)+"','"+ str (expirationdate)+"','"+str(changemade)+"')")
+        sqlresult = conn.execute("INSERT INTO appointments (name,ndc,location,availability,arrivaldate,expirationdate, service_type,changemade)\
+            values("+"'"+ str(name) +"'" + ",'"+ str(ndc) +"', '"+ str(location) +"','"+ str (availability)+"','"+str(arrivaldate)+"','"+ str (expirationdate)+"','"+str(service_type)+"','"str(changemade)+"')")
         result = conn.commit() #this actually runs the SQL and inserts the data into the database
         if result == None:
             print("*** Data saved to database. ***")
@@ -130,7 +138,7 @@ else:
     print("Error connecting to database.")
 
 while True:
-    print("Unique Ink Appointment Tracker")
+    print("Beauty Bar Appointment Tracker")
     print("| 1 | Enter '1' for current appointments")
     print("| 2 | Enter '2' to create a client appointment")
     print("| 3 | Enter '3' to update an existing client appointment")
